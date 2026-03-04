@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<Nav>
+  <Name>Docker Icon Manager</Name>
+  <Icon>/plugins/docker-icon-manager/docker-icon-manager.png</Icon>
+  <Url>/plugins/docker-icon-manager/Docker-Icon-Manager.php</Url>
+  <SubMenu>
+    <Name>Main</Name>
+    <Url>/plugins/docker-icon-manager/Docker-Icon-Manager.php</Url>
+  </SubMenu>
+  <SubMenu>
+    <Name>Settings</Name>
+    <Url>/plugins/docker-icon-manager/Docker-Icon-Manager.php?action=settings</Url>
+  </SubMenu>
+</Nav>

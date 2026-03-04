@@ -1,0 +1,51 @@
+{
+  "plugin": {
+    "name": "Docker Icon Manager",
+    "description": "Manage Docker container icons for code-installed containers",
+    "version": "1.0.0",
+    "build": "20260304",
+    "author": "Unraid Community",
+    "homepage": "https://github.com/unraid/unraid-tailscale",
+    "repo": "unraid/unraid-tailscale",
+    "support": "https://github.com/unraid/unraid-tailscale/issues",
+    "donate": "",
+    "icon": "docker-icon-manager.png",
+    "arch": [
+      "x86_64"
+    ],
+    "requires": {
+      "unraid": "6.0"
+    },
+    "conflicts": [],
+    "provides": [],
+    "install": {
+      "pre-install": "",
+      "post-install": "",
+      "pre-remove": "",
+      "post-remove": ""
+    },
+    "webui": {
+      "menu": [
+        {
+          "name": "Docker Icon Manager",
+          "href": "/plugins/docker-icon-manager/Docker-Icon-Manager.php",
+          "icon": "docker-icon-manager.png",
+          "target": "_self"
+        }
+      ]
+    },
+    "changelog": [
+      {
+        "version": "1.0.0",
+        "date": "2026-03-04",
+        "changes": [
+          "Initial release",
+          "Support for uploading icons for code-installed containers",
+          "Automatic template generation",
+          "Web interface for managing icons",
+          "Multi-language support"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,65 @@
+<?php
+require_once '/usr/local/emhttp/plugins/docker-icon-manager/include/common.php';
+
+// 处理设置保存
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // 保存设置逻辑
+    $settings = [
+        'icon_dir' => $_POST['icon_dir'] ?? '/var/lib/docker/unraid/images/',
+        'template_dir' => $_POST['template_dir'] ?? '/boot/config/plugins/dockerMan/templates-user/',
+        'max_icon_size' => $_POST['max_icon_size'] ?? 2,
+    ];
+    // 保存设置到文件
+    file_put_contents('/boot/config/plugins/docker-icon-manager/settings.json', json_encode($settings));
+    $message = 'Settings saved successfully!';
+}
+
+// 加载当前设置
+$settings = [
+    'icon_dir' => '/var/lib/docker/unraid/images/',
+    'template_dir' => '/boot/config/plugins/dockerMan/templates-user/',
+    'max_icon_size' => 2,
+];
+
+if (file_exists('/boot/config/plugins/docker-icon-manager/settings.json')) {
+    $loadedSettings = json_decode(file_get_contents('/boot/config/plugins/docker-icon-manager/settings.json'), true);
+    if ($loadedSettings) {
+        $settings = array_merge($settings, $loadedSettings);
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Icon Manager - Settings</title>
+    <link rel="stylesheet" href="/plugins/docker-icon-manager/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Docker Icon Manager - Settings</h1>
+        
+        <?php if (isset($message)): ?>
+            <div class="message success"><?php echo $message; ?></div>
+        <?php endif; ?>
+        
+        <form method="post">
+            <div class="form-group">
+                <label for="icon_dir">Icon Directory:</label>
+                <input type="text" id="icon_dir" name="icon_dir" value="<?php echo $settings['icon_dir']; ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="template_dir">Template Directory:</label>
+                <input type="text" id="template_dir" name="template_dir" value="<?php echo $settings['template_dir']; ?>" required>
+            </div>
+            <div class="form-group">
+                <label for="max_icon_size">Max Icon Size (MB):</label>
+                <input type="number" id="max_icon_size" name="max_icon_size" value="<?php echo $settings['max_icon_size']; ?>" min="1" max="10" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "Docker Icon Manager">
+<!ENTITY author    "Unraid Community">
+<!ENTITY version   "1.0.0">
+<!ENTITY gitURL    "https://github.com/unraid/unraid-tailscale">
+<!ENTITY pluginURL "https://github.com/unraid/unraid-tailscale/releases/download/v&version;/docker-icon-manager-&version;.txz">
+<!ENTITY md5       "">
+<!ENTITY summary   "Manage Docker container icons for code-installed containers">
+<!ENTITY description "This plugin allows you to manage icons for Docker containers that were installed via code, which cannot be managed through the regular Docker GUI.">
+]>
+<PLUGIN name="&name;" author="&author;" version="&version;" pluginURL="&pluginURL;" gitURL="&gitURL;" summary="&summary;" description="&description;">
+<CHANGES>
+<CHANGE version="1.0.0">Initial release</CHANGE>
+</CHANGES>
+
+<FILE Name="/boot/config/plugins/docker-icon-manager/docker-icon-manager-1.0.0-noarch-1.txz">
+<URL>https://github.com/kongbg/unraid-docker-icon-manager/releases/download/1.0.0-noarch-1/docker-icon-manager-1.0.0-noarch-1.txz</URL>
+</FILE>
+
+<FILE Run="/bin/bash">
+<INLINE>
+<![CDATA[
+if [ -d "/usr/local/emhttp/plugins/docker-icon-manager" ]; then
+    rm -rf /usr/local/emhttp/plugins/docker-icon-manager
+fi
+
+upgradepkg --install-new /boot/config/plugins/docker-icon-manager/docker-icon-manager-1.0.0-noarch-1.txz
+
+echo "Plugin Docker Icon Manager installed successfully"
+]]>
+</INLINE>
+</FILE>
+</PLUGIN>

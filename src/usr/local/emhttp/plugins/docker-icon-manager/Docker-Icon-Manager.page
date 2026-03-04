@@ -1,0 +1,83 @@
+<?php
+require_once '/usr/local/emhttp/plugins/docker-icon-manager/include/common.php';
+
+$containerManager = new ContainerManager();
+$iconManager = new IconManager();
+$templateManager = new TemplateManager();
+
+$containers = $containerManager->getContainers();
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docker Icon Manager</title>
+    <link rel="stylesheet" href="/plugins/docker-icon-manager/style.css">
+    <script src="/plugins/docker-icon-manager/script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Docker Icon Manager</h1>
+        
+        <div class="upload-section">
+            <h2>Upload Icon</h2>
+            <form id="upload-form" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="container-select">Select Container:</label>
+                    <select id="container-select" name="container">
+                        <?php foreach ($containers as $container): ?>
+                            <option value="<?php echo $container['name']; ?>">
+                                <?php echo $container['name']; ?> (<?php echo $container['status']; ?>)
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="icon-file">Icon File:</label>
+                    <input type="file" id="icon-file" name="icon" accept="image/*" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload Icon</button>
+            </form>
+            <div id="upload-message"></div>
+        </div>
+
+        <div class="containers-section">
+            <h2>Containers</h2>
+            <table class="containers-table">
+                <thead>
+                    <tr>
+                        <th>Container Name</th>
+                        <th>Status</th>
+                        <th>Icon Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach ($containers as $container): ?>
+                        <tr>
+                            <td><?php echo $container['name']; ?></td>
+                            <td><?php echo $container['status']; ?></td>
+                            <td>
+                                <?php if ($container['has_icon']): ?>
+                                    <span class="icon-status icon-exists">Icon exists</span>
+                                <?php else: ?>
+                                    <span class="icon-status icon-missing">No icon</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if ($container['has_icon']): ?>
+                                    <button class="btn btn-danger" onclick="deleteIcon('<?php echo $container['name']; ?>')">Delete Icon</button>
+                                <?php else: ?>
+                                    <span class="btn btn-disabled">No icon</span>
+                                <?php endif; ?>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
